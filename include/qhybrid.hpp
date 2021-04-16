@@ -141,7 +141,7 @@ public:
     virtual bitLenInt Compose(QHybridPtr toCopy, bitLenInt start)
     {
         bitLenInt nQubitCount = qubitCount + toCopy->qubitCount;
-        SwitchModes(nQubitCount >= thresholdQubits);
+        SwitchModes(nQubitCount);
         toCopy->SwitchModes(engineType);
         SetQubitCount(nQubitCount);
         return engine->Compose(toCopy->engine, start);
@@ -176,7 +176,7 @@ public:
     virtual void Dispose(bitLenInt start, bitLenInt length, bitCapInt disposedPerm)
     {
         bitLenInt nQubitCount = qubitCount - length;
-        SwitchModes(nQubitCount >= thresholdQubits);
+        SwitchModes(nQubitCount);
         SetQubitCount(nQubitCount);
         return engine->Dispose(start, length, disposedPerm);
     }
