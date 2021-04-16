@@ -356,8 +356,14 @@ public:
     }
     virtual void CopyStateVec(QEnginePtr src)
     {
-        CombineEngines();
-        qPages[0]->CopyStateVec(src);
+        bitCapIntOcl pageSize = maxQPower / qPages.size();
+        complex* pagePtr = new complex[pageSize];
+        for (bitCapIntOcl i = 0; i < qPages.size(); i++) {
+            src->GetAmplitudePage(pagePtr, i * pageSize, pageSize);
+            qPages[i]->SetAmplitudePage(pagePtr, 0, pageSize);
+        }
+
+        delete[] pagePtr;
     }
 
     virtual bool IsZeroAmplitude()
